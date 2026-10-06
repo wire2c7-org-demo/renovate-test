@@ -1,0 +1,14 @@
+name: Dummy check
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  dummy-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo
+        run: echo "pull_request で起動しました（Renovateの更新PRで自動実行されるかの確認用）"
