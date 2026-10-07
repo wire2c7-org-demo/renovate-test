@@ -4,6 +4,6 @@
   "private": true,
   "description": "Renovate用GitHub Appの動作確認用リポジトリ（検証用・実行しない）。ms は更新PRを発生させるために古い版に固定している",
   "dependencies": {
-    "ms": "2.0.0"
+    "ms": "2.1.3"
   }
 }
