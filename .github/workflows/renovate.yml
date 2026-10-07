@@ -40,3 +40,6 @@ jobs:
           token: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
         env:
           RENOVATE_REPOSITORIES: ${{ github.repository }}
+          # ignorePrAuthor はグローバル専用のオプションのため、renovate.json ではなく環境変数で渡す
+          RENOVATE_IGNORE_PR_AUTHOR: 'true'
+          LOG_LEVEL: debug
