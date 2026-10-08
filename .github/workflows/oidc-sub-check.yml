@@ -1,0 +1,20 @@
+name: OIDC sub check (temporary)
+
+# KCP-435 タスク7.2: IAMロールの信頼ポリシーに書く sub の形式を確認するための一時的なワークフロー。確認後に削除する。
+on: workflow_dispatch
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show OIDC token claims (payload only, token is masked)
+        run: |
+          set -euo pipefail
+          resp=$(curl -sS -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=sts.amazonaws.com")
+          token=$(jq -r .value <<<"$resp")
+          echo "::add-mask::${token}"
+          cut -d. -f2 <<<"$token" | tr '_-' '/+' | jq -R '@base64d | fromjson | {sub, aud, iss, ref, repository, repository_owner, repository_id, repository_owner_id, job_workflow_ref}'
